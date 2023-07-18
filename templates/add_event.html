@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZqJaxmcTKUYZ3F9+W5AggVe2+B12A03MTYXblOu9txqojQPBsEnfcW0k+z8T7m" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css ">
+    <title>Event | Add Event</title>
+</head>
+<style>
+    .nav-link, .navbar-brand {
+        margin-right: 27px; 
+    }
+    #do::placeholder{
+        color: white;
+    }
+    #do{
+        color: white;
+        background: transparent;
+    }
+    input[type='text']::placeholder, input[type='number']::placeholder{
+        color: black;
+    }
+    input[type='text'], input[type='date'], input[type='time'], input[type='number'], textarea{
+        color: black;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-days fa-lg" style="padding-right: 5px;"></i>Event Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;">
+                            <i class="fa-solid fa-calendar" style="padding-right: 5px;"></i>All Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'add_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-plus" style="padding-right: 5px;"></i>Add Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'added_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-day" style="padding-right: 5px;"></i>Added Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'registered_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-check" style="padding-right: 5px;"></i>Registered Events</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}}</a>
+                        <div class="dropdown-menu">
+                            <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="dropdown-item" href="{% url 'setting' %}">Account Settings</a>
+                            <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <center>
+        {% for message in messages %}
+        <h4 style="font-family: Georgia, 'Times New Roman', Times, serif; color:#fff;">{{message}}</h4>
+        {% endfor %}
+    </center>
+    
+    <div class="container-fluid">
+        <h3 class="m-4" style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">Add Event</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-dark ms-4 me-4 mb-4">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <div class="table-responsive">
+                                <form method="POST" action="{% url 'add_event' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_name" placeholder="Enter event name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Date</label>
+                                        <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_date" placeholder="Enter event date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Time</label>
+                                        <input type="time" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_time" placeholder="Enter event time" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Location</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_location" placeholder="Enter event location" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Guest Speaker</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_speaker" placeholder="Enter guest speaker" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleInputEmail1" class="form-label mt-4">Event Ticket Price</label>
+                                        <input type="number" step="0.01" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="event_price" placeholder="Enter ticket price" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" for="exampleTextarea" class="form-label mt-4">Event Agenda</label>
+                                        <textarea name="event_agenda" class="form-control" id="exampleTextarea" rows="3" required></textarea>
+                                    </div><br>
+                                    <div class="form-group">
+                                        <button style="width: 100%; font-size: 20px;font-family: Georgia, 'Times New Roman', Times, serif;" class="btn btn-info" type="submit">Add Event</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br><br><br>
+
+    <footer class="mt-auto mb-4">
+        <div class="text-center">
+            <span  style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">
+                Copyright &copy; <script>document.write(new Date().getFullYear())</script> Jordan Lopez
+            </span>
+        </div>
+    </footer>
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script>
+
+</body>
+</html>

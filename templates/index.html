@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZqJaxmcTKUYZ3F9+W5AggVe2+B12A03MTYXblOu9txqojQPBsEnfcW0k+z8T7m" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css ">
+    <title>Event | Home</title>
+</head>
+<style>
+    .nav-link, .navbar-brand {
+        margin-right: 27px; 
+    }
+    #do::placeholder{
+        color: white;
+    }
+    #do{
+        color: white;
+        background: transparent;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-days fa-lg" style="padding-right: 5px;"></i>Event Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;">
+                            <i class="fa-solid fa-calendar" style="padding-right: 5px;"></i>All Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'add_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-plus" style="padding-right: 5px;"></i>Add Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'added_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-day" style="padding-right: 5px;"></i>Added Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'registered_event' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;"><i class="fa-solid fa-calendar-check" style="padding-right: 5px;"></i>Registered Events</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}}</a>
+                        <div class="dropdown-menu">
+                            <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="dropdown-item" href="{% url 'setting' %}">Account Settings</a>
+                            <a style="font-family: Georgia, 'Times New Roman', Times, serif;color: #fff;" class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <center>
+        {% for message in messages %}
+        <h4 style="font-family: Georgia, 'Times New Roman', Times, serif; color:#fff;">{{message}}</h4>
+        {% endfor %}
+    </center>
+
+    <div class="container-fluid">
+        <h3 class="m-4" style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">All Events</h3>
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-dark ms-4 me-4 mb-4">
+                    <div class="card-header">
+                        <form class="d-flex" method="GET" action="{% url 'index' %}">
+                            <input name="search" style="width: 35vw;" id="do" class="form-control me-sm-2" type="search" placeholder="Event name..">
+                            <button class="btn btn-secondary my-2 my-sm-0" style="color: #fff;background:transparent" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <div class="table-responsive">
+                                {% if event_present %}
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;margin-bottom:10px;" scope="col">EVENT NAME</th>
+                                            <th style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" scope="col">EVENT DATE</th>
+                                            <th style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" scope="col">EVENT TIME</th>
+                                            <th style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" scope="col">EVENT LOCATION</th>
+                                            <th style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" scope="col">EVENT VIEW</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for event in events reversed %}
+                                        <tr>
+                                            <td style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">{{event.event_name}}</td>
+                                            <td style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">{{event.event_date}}</td>
+                                            <td style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">{{event.event_time}}</td>
+                                            <td style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">{{event.event_location}}</td>
+
+                                            <td>
+                                                <button type="button" class="btn btn-info" href="" data-bs-toggle="modal" data-bs-target="#myModal{{ event.id }}"><i class="fa-solid fa-circle-info fa-lg"></i></button>
+                                                <div class="modal" id="myModal{{ event.id }}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;" class="modal-title">EVENT: <strong>{{event.event_name}}</strong></h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                    <ul class="list-unstyled">
+                                                                        <li style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">AGENDA: <strong>{{event.event_agenda}}</strong></li>
+                                                                        <li style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">GUEST SPEAKER: <strong>{{event.event_guest_speakers}}</strong></li>
+                                                                        <li style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">TICKET PRICE: <strong>D{{event.event_ticket_price}}</strong></li>
+                                                                    </ul>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <form action="{% url 'event_registration' %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="event_id" value="{{ event.id }}">
+                                                                    <button type="submit" class="btn btn-info">Register</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <p style="font-family: Georgia, 'Times New Roman', Times, serif;color:#fff;">No Events</p>
+                                {% endif %}
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="mt-auto mb-4">
+        <div class="text-center">
+            <span  style="color: #fff;font-family: Georgia, 'Times New Roman', Times, serif;">
+                Copyright &copy; <script>document.write(new Date().getFullYear())</script> Jordan Lopez
+            </span>
+        </div>
+    </footer>
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script>
+
+</body>
+</html>

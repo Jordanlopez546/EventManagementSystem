@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title style="font-family: Georgia, 'Times New Roman', Times, serif;">Event | Sign Up</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <!-- <link href="{% static 'assets/img/favicon.png' %}" rel="icon"> -->
+    <!-- <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+    <!-- Google Fonts -->
+    <link href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900' %}" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    
+    <style>
+        input[type='text']{
+            width: 100%;
+        }
+        button[type='submit']{
+                border-radius: 10px;
+                color: 073642;
+            }
+        button[type='submit']:hover{
+                
+                background: 073642;
+            }
+        .omo:hover{
+            color: white;
+        }
+        .omo{
+            color: white;
+        }
+        #check{
+            color: #073642;
+        }
+        #check:hover{
+            background: #073642;
+            color: white;
+        }
+        @media screen and (min-width: 700px) {
+            button[type='submit']{
+                margin-right: 100px;
+                margin-top: 10px;
+            }
+            #check{
+            color: #073642;
+        }
+        #check:hover{
+            background: #073642;
+            color: white;
+        }
+        }
+
+        @media screen and (max-width: 700px) {
+            button[type='submit']{
+                margin-top: 10px;
+            }
+            #check{
+            color: #073642;
+        }
+        #check:hover{
+            background: #073642;
+            color: white;
+        }
+        }
+    </style>
+
+</head>
+
+<body style="background: #073642;">
+    <center>
+        <h3 style="padding-top: 70px;color:white; font-family: Georgia, 'Times New Roman', Times, serif;">
+            Sign Up Below or <a class="omo" href="{% url 'login' %}">Log In here</a>
+        </h3>
+    {% for message in messages %}
+        <h5 style="color: red; font-family: Georgia, 'Times New Roman', Times, serif;">{{message}}</h5>
+    {% endfor %}
+    <div class="col-md-6" style="margin: auto; padding:30px;">
+            <div class="form contact-form">
+                <form action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
+                <br>
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="Your Name." required>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email." required>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="password" class="form-control" name="password" placeholder="Create Password." required>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="password" class="form-control" name="password2" placeholder="Confirm Password." required>
+                </div>
+                <div class="text-center" style="font-family: Georgia, 'Times New Roman', Times, serif; "><button id="check"  type="submit" class="sus-btn" style="font-family: Georgia, 'Times New Roman', Times, serif;">Sign Up</button></div>
+                </form>
+            </div>
+        </div>
+        </center>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
